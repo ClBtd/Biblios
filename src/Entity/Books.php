@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: BooksRepository::class)]
 class Books
@@ -17,27 +18,40 @@ class Books
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Assert\Length(min: 5)]
+    #[Assert\NotBlank()]
     #[ORM\Column(length: 255)]
     private ?string $title = null;
 
+    #[Assert\Regex(pattern: '/^(97(8|9))?\d{9}(\d|X)$/')]
+    #[Assert\NotBlank()]
     #[ORM\Column(length: 255)]
     private ?string $isbn = null;
 
-    #[ORM\Column(length: 255)]
+    #[Assert\Regex(pattern: '/\.(jpe?g|png|gif)$/i')]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $cover = null;
 
+    #[Assert\NotBlank()]
     #[ORM\Column]
     private ?\DateTimeImmutable $editedAt = null;
 
+    #[Assert\Length(min: 50)]
+    #[Assert\NotBlank()]
     #[ORM\Column(type: Types::TEXT)]
     private ?string $plot = null;
 
+    #[Assert\Type('integer')]
+    #[Assert\GreaterThan(10)]
+    #[Assert\NotBlank()]
     #[ORM\Column]
     private ?int $pageNumber = null;
 
+    #[Assert\NotBlank()]
     #[ORM\Column(length: 255)]
     private ?BookStatus $status = null;
 
+    #[Assert\NotBlank()]
     #[ORM\ManyToOne(inversedBy: 'books')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Editors $editor = null;
@@ -48,6 +62,7 @@ class Books
     #[ORM\OneToMany(targetEntity: Comments::class, mappedBy: 'book', orphanRemoval: true)]
     private Collection $comments;
 
+    #[Assert\NotBlank()]
     #[ORM\ManyToOne(inversedBy: 'books')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Authors $author = null;

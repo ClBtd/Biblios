@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter un livre{% endblock %}
+
+{% block body %}
+
+    <h1 class="my-3 mx-5">Ajouter un livre au catalogue :</h1>
+
+    <div class="w-50 m-auto py-3">
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+            <button type="submit" class="btn btn-secondary">Envoyer</button>
+        {{ form_end(form) }}
+    </div>
+
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nos auteurs{% endblock %}
+
+{% block body %}
+
+<h1>Tous nos auteurs</h1>
+
+<ul class="list-group list-group-flush">
+    {% for author in authors %}
+    <div class="card mb-1 mx-3">
+        <div class="card-body">
+            <div class="card-title d-flex justify-content-between">
+                <a href="{{ path('admin_author_show', {id: author.id}) }}" class="stretched-link link-dark">
+                    <h4 class="mb-1">{{ author.name }}</h4>
+                </a>
+                <small class="text-muted">Identifiant : {{ author.id }}</small>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</ul>
+
+{% endblock %}

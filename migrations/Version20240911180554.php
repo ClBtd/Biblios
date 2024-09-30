@@ -27,7 +27,7 @@ final class Version20240911180554 extends AbstractMigration
         $this->addSql('CREATE TABLE authors (id INT NOT NULL, name VARCHAR(255) NOT NULL, date_of_birth TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, date_of_death TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL, nationality VARCHAR(255) DEFAULT NULL, PRIMARY KEY(id))');
         $this->addSql('COMMENT ON COLUMN authors.date_of_birth IS \'(DC2Type:datetime_immutable)\'');
         $this->addSql('COMMENT ON COLUMN authors.date_of_death IS \'(DC2Type:datetime_immutable)\'');
-        $this->addSql('CREATE TABLE books (id INT NOT NULL, editor_id INT NOT NULL, author_id INT NOT NULL, title VARCHAR(255) NOT NULL, isbn VARCHAR(255) NOT NULL, cover VARCHAR(255) NOT NULL, edited_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, plot TEXT NOT NULL, page_number INT NOT NULL, status VARCHAR(255) NOT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE TABLE books (id INT NOT NULL, editor_id INT NOT NULL, author_id INT NOT NULL, title VARCHAR(255) NOT NULL, isbn VARCHAR(255) NOT NULL, cover VARCHAR(255), edited_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, plot TEXT NOT NULL, page_number INT NOT NULL, status VARCHAR(255) NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE INDEX IDX_4A1B2A926995AC4C ON books (editor_id)');
         $this->addSql('CREATE INDEX IDX_4A1B2A92F675F31B ON books (author_id)');
         $this->addSql('COMMENT ON COLUMN books.edited_at IS \'(DC2Type:datetime_immutable)\'');

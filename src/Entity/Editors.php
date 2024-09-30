@@ -6,6 +6,7 @@ use App\Repository\EditorsRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: EditorsRepository::class)]
 class Editors
@@ -15,12 +16,15 @@ class Editors
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Assert\Length(min: 5)]
+    #[Assert\NotBlank()]
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
     /**
      * @var Collection<int, Books>
      */
+    #[Assert\NotBlank()]
     #[ORM\OneToMany(targetEntity: Books::class, mappedBy: 'editor', orphanRemoval: true)]
     private Collection $books;
 
