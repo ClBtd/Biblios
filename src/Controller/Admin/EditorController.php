@@ -16,6 +16,11 @@ use Symfony\Component\HttpFoundation\Request;
 #[Route('/admin/editor')]
 class EditorController extends AbstractController
 {
+    public function __construct(private EntityManagerInterface $em)
+    {
+        
+    }
+
     #[Route('', name: 'admin_editor')]
     public function index(EditorsRepository $repository): Response
     {
@@ -28,15 +33,15 @@ class EditorController extends AbstractController
 
     #[Route('/new', name: 'admin_editor_new',  methods: ['GET', 'POST'])]
     #[Route('/{id}/edit', name: 'admin_editor_edit', requirements: ['id' => '\d+'], methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $em, ?Editors $editor): Response
+    public function new(Request $request, ?Editors $editor): Response
     {
         $editor ??= new Editors();
         $form = $this->createForm(EditorType::class, $editor);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $em->persist($editor);
-            $em->flush();
+            $this->em->persist($editor);
+            $this->em->flush();
             return $this->redirectToRoute('admin_editor_show', ['id' => $editor->getId()]);
         }
 
@@ -54,10 +59,10 @@ class EditorController extends AbstractController
     }
 
     #[Route('/{id}/remove', name: 'admin_editor_remove', requirements: ['id' => '\d+'])]
-    public function remove(Editors $editor,EntityManagerInterface $em): Response
+    public function remove(Editors $editor): Response
     {
-        $em->remove($editor);
-        $em->flush();
+        $this->em->remove($editor);
+        $this->em->flush();
 
         return $this->redirectToRoute('admin_editor');
     }    
