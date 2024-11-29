@@ -12,6 +12,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
+#[IsGranted('IS_AUTHENTICATED')]
 #[Route('/admin/author')]
 class AuthorController extends AbstractController
 {
@@ -20,7 +21,6 @@ class AuthorController extends AbstractController
         
     }
 
-    #[IsGranted('IS_AUTHENTICATED')]
     #[Route('', name: 'admin_author')]
     public function index(AuthorsRepository $repository): Response
     {
